@@ -28,9 +28,9 @@ function App() {
       const response = await axios.post(`${baseUrl}/v2/admin/signin`, account);
       const { token, expired } = response.data;
 
-      if (!token || !expired) {
-        throw new Error("帳號或密碼錯誤");
-      }
+      // if (!token || !expired) {
+      //   throw new Error("帳號或密碼錯誤");
+      // }
       document.cookie = `hjToken=${token}; expires=${new Date(expired)}`;
       
       axios.defaults.headers.common['Authorization'] = token;
