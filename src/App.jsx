@@ -31,7 +31,7 @@ function App() {
       if (!token || !expired) {
         throw new Error("帳號或密碼錯誤");
       }
-      document.cookie = `hjToken=${token}; expires=${new Date(expired)}`;
+      document.cookie = `hexToken=${token}; expires=${new Date(expired)}`;
       
       axios.defaults.headers.common['Authorization'] = token;
       
@@ -55,6 +55,12 @@ function App() {
 
   const checkUserLogin = async () => {
     try {
+      const token = document.cookie.replace(
+        /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
+        "$1",
+      );
+      axios.defaults.headers.common.Authorization = token;
+
       await axios.post(`${baseUrl}/v2/api/user/check`);
       alert("使用者已登入");
     } catch (error) {
